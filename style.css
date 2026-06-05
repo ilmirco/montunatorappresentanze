@@ -1259,3 +1259,20 @@ body.dark-theme .brand-ext-card:hover .brand-ext-action {
     color: var(--accent-primary);
 }
 
+
+/* ==========================================================================
+   Mobile Title Override
+   ========================================================================== */
+.mobile-title {
+    display: none;
+}
+@media (max-width: 768px) {
+    .desktop-title {
+        display: none !important;
+    }
+    .mobile-title {
+        display: block !important;
+        margin-top: 1rem;
+        font-size: clamp(2.5rem, 8vw, 3.5rem);
+    }
+}
