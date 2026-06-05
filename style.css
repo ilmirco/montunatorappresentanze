@@ -423,10 +423,29 @@ img {
     transition: var(--transition-normal);
 }
 
-.sector-card:hover {
+/* ---------------- LIGHT MODE HOVER ---------------- */
+body:not(.dark-theme) .sector-card:hover {
+    transform: translateY(-10px);
+    background: var(--accent-gradient);
+    border-color: var(--accent-primary);
+    box-shadow: 0 15px 35px rgba(220, 38, 38, 0.3), 0 0 20px rgba(220, 38, 38, 0.15);
+}
+
+body:not(.dark-theme) .sector-card:hover h3,
+body:not(.dark-theme) .sector-card:hover p {
+    color: #ffffff;
+}
+
+body:not(.dark-theme) .sector-card:hover .icon-wrapper {
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ---------------- DARK MODE HOVER ---------------- */
+body.dark-theme .sector-card:hover {
     transform: translateY(-10px);
     border-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255, 255, 255, 0.4);
     background: var(--bg-primary);
 }
 
@@ -1176,6 +1195,29 @@ body.dark-theme .logo-img {
     position: relative;
     overflow: hidden;
 }
+
+body.dark-theme .spotlight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        600px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
+        rgba(255, 255, 255, 0.15), 
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+body.dark-theme .spotlight-card:hover::before {
+    opacity: 1;
+}
+
 
 
 /* Apply spotlight to cards */
