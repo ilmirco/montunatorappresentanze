@@ -193,3 +193,47 @@
         });
     });
 
+
+    // === COOKIE BANNER LOGIC ===
+    const cookieBanner = document.getElementById('cookie-banner');
+    const cookieAccept = document.getElementById('cookie-accept');
+    const cookieReject = document.getElementById('cookie-reject');
+    const openCookieSettings = document.getElementById('open-cookie-settings');
+
+    if (cookieBanner) {
+        // Check if user has already made a choice
+        const cookieChoice = localStorage.getItem('cookieChoice');
+        
+        if (!cookieChoice) {
+            // Slight delay before showing banner for better UX
+            setTimeout(() => {
+                cookieBanner.classList.add('show');
+            }, 1000);
+        }
+
+        const handleCookieAction = (choice) => {
+            localStorage.setItem('cookieChoice', choice);
+            cookieBanner.classList.remove('show');
+            
+            // If accepted, we could initialize analytics here
+            if (choice === 'accepted') {
+                console.log('Cookies accepted - initializing analytics...');
+            }
+        };
+
+        if (cookieAccept) {
+            cookieAccept.addEventListener('click', () => handleCookieAction('accepted'));
+        }
+
+        if (cookieReject) {
+            cookieReject.addEventListener('click', () => handleCookieAction('rejected'));
+        }
+
+        // Allow user to reopen cookie settings from footer
+        if (openCookieSettings) {
+            openCookieSettings.addEventListener('click', (e) => {
+                e.preventDefault();
+                cookieBanner.classList.add('show');
+            });
+        }
+    }
