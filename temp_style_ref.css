@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    CSS Variables & Design Tokens
    ========================================================================== */
    :root {
@@ -131,13 +131,13 @@ img {
 .btn-primary {
     background: var(--accent-primary);
     color: #fff;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
 }
 
 .btn-primary:hover {
     background: #B91C1C;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
 }
 
 .btn-secondary {
@@ -196,14 +196,14 @@ img {
 }
 
 .logo:hover .logo-img {
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.6));
     transform: scale(1.05);
 }
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2.5rem;
 }
 
 .nav-links a:not(.btn-primary) {
@@ -417,7 +417,7 @@ img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #000;
+    background: var(--accent-gradient);
     opacity: 0;
     z-index: -1;
     transition: var(--transition-normal);
@@ -436,7 +436,7 @@ img {
 .icon-wrapper {
     width: 60px;
     height: 60px;
-    background: rgba(0, 0, 0, 0.04);
+    background: rgba(220, 38, 38, 0.1);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -672,7 +672,7 @@ img {
 
 .catalog-icon {
     color: var(--accent-primary);
-    background: rgba(0, 0, 0, 0.04);
+    background: rgba(220, 38, 38, 0.1);
     width: 60px;
     height: 60px;
     border-radius: 12px;
@@ -870,391 +870,3 @@ img {
     transform: translateX(4px) translateY(-4px);
 }
 
-/* Stats Section */
-.stats {
-    background: var(--bg-primary);
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    text-align: center;
-}
-
-.stat-item {
-    padding: 2rem;
-    background: var(--bg-secondary);
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    border: 1px solid var(--border-color);
-    transition: transform 0.3s ease;
-}
-
-.stat-item:hover {
-    transform: translateY(-5px);
-}
-
-.stat-number {
-    font-size: 3.5rem;
-    font-weight: 800;
-    font-family: var(--font-heading);
-    color: var(--accent-primary);
-    display: inline-block;
-    line-height: 1;
-}
-
-.stat-plus {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--accent-primary);
-    vertical-align: top;
-}
-
-.stat-label {
-    margin-top: 0.5rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Premium Contact Section */
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 4rem;
-    align-items: flex-start;
-}
-
-@media (max-width: 992px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-    }
-}
-
-.contact-info-panel h3 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-family: var(--font-heading);
-}
-
-.contact-info-panel p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-}
-
-.contact-list-large {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.contact-list-large li {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.icon-circle {
-    width: 60px;
-    height: 60px;
-    background: rgba(0, 0, 0, 0.04);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-primary);
-}
-
-.icon-circle svg {
-    width: 28px;
-    height: 28px;
-}
-
-.contact-list-large strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 0.2rem;
-}
-
-.contact-list-large span {
-    color: var(--text-secondary);
-    font-size: 1.05rem;
-}
-
-/* Premium Form */
-.premium-form {
-    background: var(--bg-primary);
-    padding: 3rem;
-    border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-    border: 1px solid var(--border-color);
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-}
-
-@media (max-width: 768px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    .premium-form {
-        padding: 2rem;
-    }
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 1rem 1.25rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 1rem;
-    transition: var(--transition-normal);
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--text-primary);
-    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
-}
-
-.btn-submit {
-    width: 100%;
-    padding: 1.25rem;
-    font-size: 1.1rem;
-    margin-top: 1rem;
-}
-
-
-
-/* Reveal Animations */
-.reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Ottimizzazione Layout 2 Contatori */
-.stats-grid-two {
-    grid-template-columns: repeat(2, minmax(200px, 400px));
-    justify-content: center;
-}
-@media (max-width: 550px) {
-    .stats-grid-two {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Update variables for better glassmorphism */
-:root {
-    --glass-bg: rgba(255, 255, 255, 0.85);
-    --glass-border: rgba(0, 0, 0, 0.05);
-}
-
-
-/* ==========================================================================
-   Theme Toggle Button & Dark Mode Variables
-   ========================================================================== */
-.theme-toggle {
-    background: transparent;
-    border: none;
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    transition: var(--transition-normal);
-    margin-left: 1rem;
-}
-
-.theme-toggle:hover {
-    background: rgba(0, 0, 0, 0.05);
-}
-
-.theme-toggle svg {
-    width: 20px;
-    height: 20px;
-    transition: var(--transition-normal);
-}
-
-.theme-toggle .moon-icon {
-    display: none;
-}
-
-/* Dark Theme Variables */
-body.dark-theme {
-    --bg-primary: #0F172A;
-    --bg-secondary: #1E293B;
-    --bg-tertiary: #334155;
-    
-    --text-primary: #F8FAFC;
-    --text-secondary: #CBD5E1;
-    --text-muted: #94A3B8;
-    
-    --border-color: rgba(255, 255, 255, 0.1);
-    --glass-bg: rgba(15, 23, 42, 0.85);
-    --glass-border: rgba(255, 255, 255, 0.08);
-}
-
-body.dark-theme .theme-toggle {
-    color: var(--text-primary);
-}
-
-body.dark-theme .theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-body.dark-theme .theme-toggle .sun-icon {
-    display: none;
-}
-
-body.dark-theme .theme-toggle .moon-icon {
-    display: block;
-}
-
-body.dark-theme .hero-overlay {
-    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.85), var(--bg-primary));
-}
-
-body.dark-theme .icon-wrapper,
-body.dark-theme .icon-circle,
-body.dark-theme .catalog-icon {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Glow Effect in Dark Mode */
-body.dark-theme .btn-primary {
-    box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
-}
-body.dark-theme .btn-primary:hover {
-    box-shadow: 0 0 25px rgba(220, 38, 38, 0.6);
-}
-
-body.dark-theme .logo-img {
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
-}
-
-/* ==========================================================================
-   Spotlight Effect (Lighting Theme)
-   ========================================================================== */
-.spotlight-card {
-    position: relative;
-    overflow: hidden;
-}
-
-.spotlight-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-        800px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
-        rgba(255, 255, 255, 0.06), 
-        transparent 40%
-    );
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.spotlight-card:hover::before {
-    opacity: 1;
-}
-
-body.dark-theme .spotlight-card::before {
-    background: radial-gradient(
-        800px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
-        rgba(255, 255, 255, 0.1), 
-        transparent 40%
-    );
-}
-
-/* Apply spotlight to cards */
-.sector-card, .brand-ext-card, .stat-item, .contact-form-panel {
-    position: relative;
-}
-
-/* ==========================================================================
-   View Transitions API (Theme Switch Animation)
-   ========================================================================== */
-::view-transition-old(root),
-::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
-}
-
-::view-transition-old(root) {
-    z-index: 1;
-}
-
-::view-transition-new(root) {
-    z-index: 2;
-}
-
-/* Force white background and dark text for brand cards in Dark Mode */
-body.dark-theme .brand-card,
-body.dark-theme .brand-ext-card {
-    background: #ffffff;
-    border-color: rgba(0, 0, 0, 0.08);
-}
-
-body.dark-theme .brand-ext-card {
-    color: #09090B;
-}
-
-body.dark-theme .brand-ext-card .brand-ext-name {
-    color: #09090B;
-}
-
-body.dark-theme .brand-ext-card .brand-ext-desc {
-    color: #3F3F46;
-}
-
-body.dark-theme .brand-ext-card .brand-ext-action {
-    color: #3F3F46;
-}
-
-body.dark-theme .brand-ext-card:hover {
-    border-color: var(--accent-primary);
-}
-
-body.dark-theme .brand-ext-card:hover .brand-ext-action {
-    color: var(--accent-primary);
-}
