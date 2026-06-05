@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    CSS Variables & Design Tokens
    ========================================================================== */
    :root {
@@ -425,8 +425,9 @@ img {
 
 .sector-card:hover {
     transform: translateY(-10px);
-    border-color: rgba(255,255,255,0.2);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 0 20px rgba(255, 255, 255, 0.4);
+    background: var(--bg-primary);
 }
 
 .sector-card:hover::before {
@@ -1184,8 +1185,8 @@ body.dark-theme .logo-img {
     right: 0;
     bottom: 0;
     background: radial-gradient(
-        800px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
-        rgba(255, 255, 255, 0.06), 
+        600px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
+        rgba(255, 255, 255, 0.5), 
         transparent 40%
     );
     opacity: 0;
@@ -1200,8 +1201,8 @@ body.dark-theme .logo-img {
 
 body.dark-theme .spotlight-card::before {
     background: radial-gradient(
-        800px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
-        rgba(255, 255, 255, 0.1), 
+        600px circle at var(--mouse-x, 0) var(--mouse-y, 0), 
+        rgba(255, 255, 255, 0.15), 
         transparent 40%
     );
 }
