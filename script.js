@@ -239,6 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // === CATALOGS MODAL LOGIC ===
+
+    // === CATALOGS MODAL LOGIC ===
     const catalogData = {
         'https://www.eta.it': {
             name: 'ETA',
@@ -282,14 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
             officialLink: 'https://www.ortea.com/it',
             catalogs: [
                 { name: 'Catalogo Power Quality 2026', file: 'cataloghi/catalogo_2026_ortea.pdf' }
-            ]
-        },
-
-            name: 'Icar / Ortea Next',
-            officialLink: 'https://www.orteanext.com/',
-            catalogs: [
-                { name: 'Catalogo Rifasamento 2026 (Icar)', file: 'cataloghi/catalogo_2026_icar.pdf' },
-                { name: 'Catalogo Power Quality 2026 (Ortea)', file: 'cataloghi/catalogo_2026_ortea.pdf' }
             ]
         },
         'https://www.ilme.com/it': {
@@ -342,10 +336,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         link.href = cat.file;
                         link.download = '';
                         link.className = 'catalog-item';
-                        link.innerHTML = 
+                        link.innerHTML = `
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            \
-                        ;
+                            ${cat.name}
+                        `;
                         modalCatalogList.appendChild(link);
                     });
                     
@@ -361,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         };
 
-        modalCloseBtn.addEventListener('click', closeModal);
+        if(modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
         
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) closeModal();
@@ -373,5 +367,3 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-
