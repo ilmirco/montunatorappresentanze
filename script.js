@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     // Mobile Menu Toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
@@ -237,3 +237,141 @@
             });
         }
     }
+
+    // === CATALOGS MODAL LOGIC ===
+    const catalogData = {
+        'https://www.eta.it': {
+            name: 'ETA',
+            officialLink: 'https://www.eta.it/it/cataloghi/',
+            catalogs: [
+                { name: 'Catalogo Generale', file: 'cataloghi/catalogo_2026_eta.pdf' },
+                { name: 'Listino Prezzi', file: 'cataloghi/listino_2026_eta.pdf' }
+            ]
+        },
+        'https://www.arcluce.it': {
+            name: 'Arcluce',
+            officialLink: 'https://www.arcluce.it/it/download',
+            catalogs: [
+                { name: 'Catalogo Indoor 2026', file: 'cataloghi/catalogo_2026_arcluce.pdf' },
+                { name: 'Catalogo Outdoor 2026', file: 'cataloghi/outdoor_2026_arcluce.pdf' }
+            ]
+        },
+        'https://www.amra-chauvin-arnoux.it': {
+            name: 'AMRA',
+            officialLink: 'https://www.amra-chauvin-arnoux.it/',
+            catalogs: [
+                { name: 'Catalogo Strumentazione 2026', file: 'cataloghi/catalogo_2026_amra.pdf' }
+            ]
+        },
+        'https://www.chauvin-arnoux.com/it': {
+            name: 'Chauvin Arnoux',
+            officialLink: 'https://www.chauvin-arnoux.com/it',
+            catalogs: [
+                { name: 'Catalogo Prodotti 2026', file: 'cataloghi/catalogo_2026_chauvin-arnoux.pdf' }
+            ]
+        },
+        'https://www.icar.com': {
+            name: 'Icar',
+            officialLink: 'https://www.icar.com/',
+            catalogs: [
+                { name: 'Catalogo Rifasamento 2026', file: 'cataloghi/catalogo_2026_icar.pdf' }
+            ]
+        },
+        'https://www.ortea.com/it': {
+            name: 'Ortea',
+            officialLink: 'https://www.ortea.com/it',
+            catalogs: [
+                { name: 'Catalogo Power Quality 2026', file: 'cataloghi/catalogo_2026_ortea.pdf' }
+            ]
+        },
+
+            name: 'Icar / Ortea Next',
+            officialLink: 'https://www.orteanext.com/',
+            catalogs: [
+                { name: 'Catalogo Rifasamento 2026 (Icar)', file: 'cataloghi/catalogo_2026_icar.pdf' },
+                { name: 'Catalogo Power Quality 2026 (Ortea)', file: 'cataloghi/catalogo_2026_ortea.pdf' }
+            ]
+        },
+        'https://www.ilme.com/it': {
+            name: 'ILME',
+            officialLink: 'https://www.ilme.com/it/download/cataloghi/',
+            catalogs: [
+                { name: 'Catalogo Generale Connettori 2026', file: 'cataloghi/catalogo_2026_ilme.pdf' },
+                { name: 'Novit? Prodotti 2026', file: 'cataloghi/novita_2026_ilme.pdf' }
+            ]
+        },
+        'https://www.teknomega.it': {
+            name: 'Teknomega',
+            officialLink: 'https://www.teknomega.it/',
+            catalogs: [
+                { name: 'Catalogo Fissaggio 2026', file: 'cataloghi/catalogo_2026_teknomega.pdf' }
+            ]
+        },
+        'https://www.zamet.it': {
+            name: 'Zamet',
+            officialLink: 'https://www.zamet.it/',
+            catalogs: [
+                { name: 'Catalogo Canalisazioni 2026', file: 'cataloghi/catalogo_2026_zamet.pdf' }
+            ]
+        }
+    };
+
+    const modalOverlay = document.getElementById('catalog-modal');
+    const modalCloseBtn = document.querySelector('.modal-close');
+    const modalBrandName = document.getElementById('modal-brand-name');
+    const modalOfficialLink = document.getElementById('modal-official-link');
+    const modalCatalogList = document.getElementById('modal-catalog-list');
+    const openModalBtns = document.querySelectorAll('.open-catalog-modal');
+
+    if (modalOverlay) {
+        // Open Modal
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const brandKey = btn.getAttribute('data-brand');
+                const data = catalogData[brandKey];
+                
+                if (data) {
+                    modalBrandName.textContent = 'Cataloghi ' + data.name;
+                    modalOfficialLink.href = data.officialLink;
+                    
+                    // Populate catalog list
+                    modalCatalogList.innerHTML = '';
+                    data.catalogs.forEach(cat => {
+                        const link = document.createElement('a');
+                        link.href = cat.file;
+                        link.download = '';
+                        link.className = 'catalog-item';
+                        link.innerHTML = 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            \
+                        ;
+                        modalCatalogList.appendChild(link);
+                    });
+                    
+                    modalOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                }
+            });
+        });
+
+        // Close Modal logic
+        const closeModal = () => {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        modalCloseBtn.addEventListener('click', closeModal);
+        
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }
+
+
