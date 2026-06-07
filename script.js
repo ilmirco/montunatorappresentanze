@@ -390,8 +390,11 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             let allVideos = [];
             
-            // Parole chiave per identificare video di prodotti/tecnici
-            const technicalKeywords = ['nuovo', 'nuova', 'prodotto', 'gamma', 'quadro', 'quadri', 'installazione', 'tecnic', 'serie', 'sistema', 'soluzion', 'illuminazione', 'led', 'catalogo', 'novità', 'tutorial', 'guida', 'accessori', 'inox', 'product', 'steel', 'relè', 'stabilizzator', 'condizionator', 'fiera', 'sps', 'presentazione', 'strument', 'misura'];
+            // Parole chiave per identificare video di prodotti/tecnici (incluso l'inglese per i canali internazionali come Chauvin Arnoux UK)
+            const technicalKeywords = [
+                'nuovo', 'nuova', 'prodotto', 'gamma', 'quadro', 'quadri', 'installazione', 'tecnic', 'serie', 'sistema', 'soluzion', 'illuminazione', 'led', 'catalogo', 'novità', 'tutorial', 'guida', 'accessori', 'inox', 'relè', 'stabilizzator', 'condizionator', 'fiera', 'sps', 'presentazione', 'strument', 'misura',
+                'product', 'steel', 'tester', 'unboxing', 'guide', 'multifunction', 'system', 'monitoring', 'energy', 'logger', 'efficiency', 'accessories', 'solution', 'instrument', 'measurement', 'how to', 'overview', 'features', 'industrial', 'commercial', 'meter'
+            ];
 
             // Calcola la data limite (esattamente 6 mesi fa)
             const sixMonthsAgo = new Date();
