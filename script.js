@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
             officialLink: 'https://www.ilme.com/it/download/cataloghi/',
             catalogs: [
                 { name: 'Catalogo Generale Connettori 2026', file: 'cataloghi/catalogo_2026_ilme.pdf' },
-                { name: 'Novit? Prodotti 2026', file: 'cataloghi/novita_2026_ilme.pdf' }
+                { name: 'Novità Prodotti 2026', file: 'cataloghi/novita_2026_ilme.pdf' }
             ]
         },
         'https://www.teknomega.it': {
