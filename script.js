@@ -367,3 +367,231 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // === VIDEO VETRINA LOGIC (YOUTUBE AUTOMATION) ===
+    const loadYouTubeVetrina = async () => {
+        const prodottiGrid = document.getElementById('prodotti-grid');
+        if (!prodottiGrid) return;
+        
+        prodottiGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; width: 100%;"><div class="spinner" style="margin: 0 auto 1rem;"></div><p>Sincronizzazione vetrina prodotti in corso...</p></div>';
+
+        // Official YouTube Channel IDs for the brands
+        const brands = [
+            { id: 'UC8RUoMHUXQrcxb8_hj_A08w', name: 'ETA S.p.A.' },
+            { id: 'UC-qS9T55vW4a-9L8a-6l2_A', name: 'Arcluce' },
+            { id: 'UC-m-R2pY_D_S834p5r1-z_Q', name: 'ILME' },
+            { id: 'UCqwcSga4ZzG3ntf6hYRu_Nw', name: 'Ortea Next' },
+            { id: 'UCx39e9waTxaUg8GdQ7P7NUg', name: 'AMRA' },
+            { id: 'UCYfG3qD5q2cJXlpq6YHtGbA', name: 'Chauvin Arnoux' },
+            { id: 'UCIH8vVkJ4wY0ojELBHSUpiw', name: 'Teknomega' },
+            { id: 'UCnPpV1pxJb6qZ6IKGXfuqUw', name: 'Zamet SpA' }
+        ];
+        
+        try {
+            let allVideos = [];
+            
+            // Parole chiave per identificare video di prodotti/tecnici
+            const technicalKeywords = ['nuovo', 'nuova', 'prodotto', 'gamma', 'quadro', 'quadri', 'installazione', 'tecnic', 'serie', 'sistema', 'soluzion', 'illuminazione', 'led', 'catalogo', 'novità', 'tutorial', 'guida', 'accessori', 'inox', 'product', 'steel', 'relè', 'stabilizzator', 'condizionator', 'fiera', 'sps', 'presentazione', 'strument', 'misura'];
+
+            // Fetch videos from all channels in parallel
+            await Promise.all(brands.map(async (brand) => {
+                const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${brand.id}`;
+                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+                
+                try {
+                    const response = await fetch(apiUrl);
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.status === 'ok' && data.items) {
+                            
+                            // Filtra solo i video tecnici basandosi sul titolo
+                            const techVideos = data.items.filter(item => {
+                                const titleLower = item.title.toLowerCase();
+                                return technicalKeywords.some(kw => titleLower.includes(kw));
+                            });
+
+                            // Prendi i primi 5 video tecnici per ogni brand
+                            const items = techVideos.slice(0, 5).map(item => ({
+                                ...item,
+                                brandName: brand.name,
+                                timestamp: new Date(item.pubDate).getTime()
+                            }));
+                            allVideos = allVideos.concat(items);
+                        }
+                    }
+                } catch (e) {
+                    console.error(`Errore caricamento brand ${brand.name}:`, e);
+                }
+            }));
+            
+            // Sort all collected videos by newest first
+            allVideos.sort((a, b) => b.timestamp - a.timestamp);
+            
+            // Take the newest 15 overall to display in the grid
+            const displayVideos = allVideos.slice(0, 15);
+            
+            if (displayVideos.length === 0) {
+                prodottiGrid.innerHTML = '<p style="color: var(--text-secondary); width: 100%; text-align: center;">Nessun video prodotto disponibile al momento.</p>';
+                return;
+            }
+            
+            let html = '';
+            displayVideos.forEach(video => {
+                // Formatting Date
+                const dateObj = new Date(video.pubDate);
+                const formattedDate = dateObj.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
+                
+                // Extract YouTube Video ID
+                const videoId = video.link.includes('v=') ? video.link.split('v=')[1].split('&')[0] : '';
+
+                html += `
+                    <div class="product-card">
+                        <div class="product-image-container" style="position: relative; cursor: pointer;" onclick="openVideo('${videoId}')">
+                            <img src="${video.thumbnail}" alt="${video.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; background: rgba(0,0,0,0.6); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <span class="product-brand">${video.brandName}</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">${formattedDate}</span>
+                            </div>
+                            <h3 class="product-title" style="font-size: 1.1rem;">${video.title}</h3>
+                            <button onclick="openVideo('${videoId}')" class="btn-primary" style="margin-top: auto; border: none; cursor: pointer; width: 100%; justify-content: center; font-family: inherit;">Guarda il video</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            prodottiGrid.innerHTML = html;
+            
+            // Inizializza logica Slider
+            initSlider(displayVideos.length);
+            
+        } catch (error) {
+            console.error('Errore globale caricamento vetrina video:', error);
+            prodottiGrid.innerHTML = '<p style="color: var(--error); width: 100%; text-align: center;">Si è verificato un errore nel caricamento della Vetrina Automatica.</p>';
+        }
+    };
+    
+    // Funzione per gestire lo slider
+    function initSlider(totalItems) {
+        const track = document.getElementById('prodotti-grid');
+        const prevBtn = document.getElementById('slider-prev');
+        const nextBtn = document.getElementById('slider-next');
+        const dotsContainer = document.getElementById('slider-dots');
+        
+        if(!track || !prevBtn || !nextBtn) return;
+        
+        let currentIndex = 0;
+        
+        // Calcola quanti elementi mostrare in base alla finestra
+        let itemsPerView = window.innerWidth <= 768 ? 1 : window.innerWidth <= 992 ? 2 : 3;
+        let maxIndex = Math.max(0, totalItems - itemsPerView);
+        
+        // Genera i dots
+        dotsContainer.innerHTML = '';
+        const numDots = Math.ceil(totalItems / itemsPerView);
+        for(let i=0; i<numDots; i++) {
+            const dot = document.createElement('div');
+            dot.className = `slider-dot ${i===0 ? 'active' : ''}`;
+            dot.addEventListener('click', () => {
+                currentIndex = Math.min(i * itemsPerView, maxIndex);
+                updateSlider();
+            });
+            dotsContainer.appendChild(dot);
+        }
+        
+        function updateSlider() {
+            // Aggiorna offset track
+            const itemWidth = track.children[0].offsetWidth;
+            const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
+            const moveAmount = (itemWidth + gap) * currentIndex;
+            track.style.transform = `translateX(-${moveAmount}px)`;
+            
+            // Aggiorna stato bottoni
+            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+            
+            // Aggiorna dots
+            const activeDotIndex = Math.floor(currentIndex / itemsPerView);
+            Array.from(dotsContainer.children).forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeDotIndex);
+            });
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex = Math.max(0, currentIndex - itemsPerView);
+                updateSlider();
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < maxIndex) {
+                currentIndex = Math.min(maxIndex, currentIndex + itemsPerView);
+                updateSlider();
+            }
+        });
+        
+        window.addEventListener('resize', () => {
+            itemsPerView = window.innerWidth <= 768 ? 1 : window.innerWidth <= 992 ? 2 : 3;
+            maxIndex = Math.max(0, totalItems - itemsPerView);
+            if(currentIndex > maxIndex) currentIndex = maxIndex;
+            updateSlider();
+            
+            // Rigenera dots su resize per correttezza
+            dotsContainer.innerHTML = '';
+            const numDots = Math.ceil(totalItems / itemsPerView);
+            for(let i=0; i<numDots; i++) {
+                const dot = document.createElement('div');
+                dot.className = `slider-dot ${Math.floor(currentIndex/itemsPerView)===i ? 'active' : ''}`;
+                dot.addEventListener('click', () => {
+                    currentIndex = Math.min(i * itemsPerView, maxIndex);
+                    updateSlider();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        });
+        
+        updateSlider();
+    }
+    
+    loadYouTubeVetrina();
+
+    // === VIDEO MODAL LOGIC ===
+    window.openVideo = function(videoId) {
+        if (!videoId) return;
+        const videoModal = document.getElementById('video-modal');
+        const youtubePlayer = document.getElementById('youtube-player');
+        if (videoModal && youtubePlayer) {
+            youtubePlayer.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+            videoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    };
+
+    const closeVideoModal = document.getElementById('close-video-modal');
+    if (closeVideoModal) {
+        closeVideoModal.addEventListener('click', () => {
+            const videoModal = document.getElementById('video-modal');
+            const youtubePlayer = document.getElementById('youtube-player');
+            if (videoModal && youtubePlayer) {
+                videoModal.classList.remove('active');
+                youtubePlayer.src = '';
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    // Close video modal on outside click
+    window.addEventListener('click', (e) => {
+        const videoModal = document.getElementById('video-modal');
+        if (videoModal && e.target === videoModal) {
+            const youtubePlayer = document.getElementById('youtube-player');
+            videoModal.classList.remove('active');
+            if (youtubePlayer) youtubePlayer.src = '';
+            document.body.style.overflow = '';
+        }
+    });

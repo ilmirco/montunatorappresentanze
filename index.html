@@ -178,6 +178,34 @@
         </div>
     </section>
 
+    <!-- Prodotti in Vetrina (Slider Dinamico) -->
+    <section id="prodotti-vetrina" class="news section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Le Nostre <span class="text-gradient">News</span></h2>
+                <p class="section-description">Scopri le ultime soluzioni tecniche e le novità di prodotto dalle nostre aziende partner.</p>
+            </div>
+
+            <div class="slider-container">
+                <button class="slider-btn prev-btn" id="slider-prev" aria-label="Notizie precedenti">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                
+                <div class="slider-viewport">
+                    <div id="prodotti-grid" class="prodotti-grid slider-track">
+                        <!-- I video verranno caricati qui -->
+                    </div>
+                </div>
+
+                <button class="slider-btn next-btn" id="slider-next" aria-label="Prossime notizie">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+            
+            <div class="slider-dots" id="slider-dots"></div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contatti" class="contact section-padding bg-alt">
         <div class="container">
@@ -244,7 +272,21 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal-overlay">
+        <div class="modal-container" style="max-width: 900px; width: 95%; background: transparent; box-shadow: none; padding: 0; border: none;">
+            <div class="modal-header" style="justify-content: flex-end; padding: 0 0 10px 0; border: none; background: transparent;">
+                <button class="close-modal" id="close-video-modal" style="position: static; color: white; background: rgba(0,0,0,0.5); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; margin-left: auto;">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 0; background: transparent;">
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; background: #000; box-shadow: 0 15px 40px rgba(0,0,0,0.3);">
+                    <iframe id="youtube-player" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">

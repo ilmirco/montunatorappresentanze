@@ -1,0 +1,29 @@
+[
+    {
+        "id": "eta-caes",
+        "brand": "ETA",
+        "title": "Nuova Gamma Quadri CAES",
+        "description": "I nuovi quadri di automazione CAES offrono il massimo grado di segregazione e sicurezza per applicazioni industriali pesanti. Design innovativo per un cablaggio ottimizzato.",
+        "imageUrl": "https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/ETA.png",
+        "linkUrl": "https://www.eta.it/it/",
+        "linkText": "Scopri la gamma"
+    },
+    {
+        "id": "ortea-stabilizzatori",
+        "brand": "Ortea",
+        "title": "Stabilizzatori di Tensione Sirius",
+        "description": "Massima protezione per macchinari sensibili. La gamma Sirius previene i fermi macchina dovuti a buchi di tensione o instabilità della rete elettrica.",
+        "imageUrl": "https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/ORTEA-NEXT.png",
+        "linkUrl": "https://www.ortea.com/it/stabilizzatori-di-tensione/",
+        "linkText": "Scheda Tecnica"
+    },
+    {
+        "id": "arcluce-proiettori",
+        "brand": "Arcluce",
+        "title": "Proiettori Industriali LED",
+        "description": "Elevata efficienza luminosa e dissipazione del calore ottimizzata. Soluzione ideale per capannoni logistici e impianti sportivi outdoor.",
+        "imageUrl": "https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/Arcluce.png",
+        "linkUrl": "https://www.arcluce.it/it/prodotti/proiettori/",
+        "linkText": "Scarica il PDF"
+    }
+]
