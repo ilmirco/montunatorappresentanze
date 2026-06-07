@@ -393,6 +393,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Parole chiave per identificare video di prodotti/tecnici
             const technicalKeywords = ['nuovo', 'nuova', 'prodotto', 'gamma', 'quadro', 'quadri', 'installazione', 'tecnic', 'serie', 'sistema', 'soluzion', 'illuminazione', 'led', 'catalogo', 'novità', 'tutorial', 'guida', 'accessori', 'inox', 'product', 'steel', 'relè', 'stabilizzator', 'condizionator', 'fiera', 'sps', 'presentazione', 'strument', 'misura'];
 
+            // Calcola la data limite (esattamente 6 mesi fa)
+            const sixMonthsAgo = new Date();
+            sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+            const sixMonthsAgoTime = sixMonthsAgo.getTime();
+
             // Fetch videos from all channels in parallel
             await Promise.all(brands.map(async (brand) => {
                 const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${brand.id}`;
@@ -404,10 +409,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         const data = await response.json();
                         if (data.status === 'ok' && data.items) {
                             
-                            // Filtra solo i video tecnici basandosi sul titolo
+                            // Filtra solo i video tecnici e caricati negli ultimi 6 mesi
                             const techVideos = data.items.filter(item => {
                                 const titleLower = item.title.toLowerCase();
-                                return technicalKeywords.some(kw => titleLower.includes(kw));
+                                const isTechnical = technicalKeywords.some(kw => titleLower.includes(kw));
+                                const isRecent = new Date(item.pubDate).getTime() >= sixMonthsAgoTime;
+                                return isTechnical && isRecent;
                             });
 
                             // Prendi i primi 5 video tecnici per ogni brand
