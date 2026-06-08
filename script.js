@@ -468,7 +468,6 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span style="font-size: 0.8rem; color: var(--text-secondary);">${formattedDate}</span>
                             </div>
                             <h3 class="product-title" style="font-size: 1.1rem;">${video.title}</h3>
-                            <button onclick="openVideo('${videoId}')" class="btn-primary" style="margin-top: auto; border: none; cursor: pointer; width: 100%; justify-content: center; font-family: inherit;">Guarda il video</button>
                         </div>
                     </div>
                 `;
@@ -605,4 +604,3 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         }
     });
-
