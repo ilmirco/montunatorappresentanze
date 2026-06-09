@@ -263,21 +263,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === CATALOGS MODAL LOGIC ===
     const catalogData = {
-        'https://www.eta.it': { name: 'ETA', folder: 'eta', officialLink: 'https://www.eta.it/it/cataloghi/' },
-        'https://www.arcluce.it': { name: 'Arcluce', folder: 'arcluce', officialLink: 'https://www.arcluce.it/it/download' },
-        'https://www.amra-chauvin-arnoux.it': { name: 'AMRA', folder: 'amra', officialLink: 'https://www.amra-chauvin-arnoux.it/' },
-        'https://www.chauvin-arnoux.com/it': { name: 'Chauvin Arnoux', folder: 'chauvin_arnoux', officialLink: 'https://www.chauvin-arnoux.com/it' },
-        'https://www.icar.com': { name: 'Icar', folder: 'icar', officialLink: 'https://www.icar.com/' },
-        'https://www.ortea.com/it': { name: 'Ortea', folder: 'ortea', officialLink: 'https://www.ortea.com/it' },
-        'https://www.ilme.com/it': { name: 'ILME', folder: 'ilme', officialLink: 'https://www.ilme.com/it/download/cataloghi/' },
-        'https://www.teknomega.it': { name: 'Teknomega', folder: 'teknomega', officialLink: 'https://www.teknomega.it/' },
-        'https://www.zamet.it': { name: 'Zamet', folder: 'zamet', officialLink: 'https://www.zamet.it/' }
+        'https://www.eta.it': { name: 'ETA', folder: 'eta' },
+        'https://www.arcluce.it': { name: 'Arcluce', folder: 'arcluce' },
+        'https://www.amra-chauvin-arnoux.it': { name: 'AMRA', folder: 'amra' },
+        'https://www.chauvin-arnoux.com/it': { name: 'Chauvin Arnoux', folder: 'chauvin_arnoux' },
+        'https://www.icar.com': { name: 'Icar', folder: 'icar' },
+        'https://www.ortea.com/it': { name: 'Ortea', folder: 'ortea' },
+        'https://www.ilme.com/it': { name: 'ILME', folder: 'ilme' },
+        'https://www.teknomega.it': { name: 'Teknomega', folder: 'teknomega' },
+        'https://www.zamet.it': { name: 'Zamet', folder: 'zamet' }
     };
 
     const modalOverlay = document.getElementById('catalog-modal');
     const modalCloseBtn = document.querySelector('.modal-close');
     const modalBrandName = document.getElementById('modal-brand-name');
-    const modalOfficialLink = document.getElementById('modal-official-link');
     const modalCatalogList = document.getElementById('modal-catalog-list');
     const openModalBtns = document.querySelectorAll('.open-catalog-modal');
 
@@ -291,7 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (data) {
                     modalBrandName.textContent = 'Cataloghi ' + data.name;
-                    modalOfficialLink.href = data.officialLink;
                     
                     modalOverlay.classList.add('active');
                     document.body.style.overflow = 'hidden'; // Prevent scrolling
