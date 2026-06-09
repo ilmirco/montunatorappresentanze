@@ -1,297 +1,439 @@
+// Wait for DOM to load
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    // 1. Mobile Menu Toggle
+    const mobileBtn = document.querySelector('.mobile-menu-btn');
     const navLinks = document.querySelector('.nav-links');
-    const navItems = document.querySelectorAll('.nav-links a');
-
-    if (mobileMenuBtn && navLinks) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenuBtn.classList.toggle('active');
+    
+    if (mobileBtn && navLinks) {
+        mobileBtn.addEventListener('click', () => {
+            mobileBtn.classList.toggle('active');
             navLinks.classList.toggle('active');
         });
 
-        // Close menu when clicking a link
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                mobileMenuBtn.classList.remove('active');
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileBtn.classList.remove('active');
                 navLinks.classList.remove('active');
             });
         });
     }
 
-    // Sticky Navbar & ScrollSpy Effects
+    // 2. Navbar Scroll Effect & ScrollSpy
     const navbar = document.getElementById('navbar');
-    const sections = document.querySelectorAll('section[id]');
+    // On the homepage, links correspond to sections. On other pages they might not.
+    // So we use standard querySelectorAll for nav links that are internal (#...)
+    const navItems = document.querySelectorAll('.nav-links a[href^="#"], .nav-links a[href^="index.html#"]');
     
-    if (navbar) {
-        window.addEventListener('scroll', () => {
-            // Sticky Navbar
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+    // Funzione per capire se siamo sulla homepage
+    const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('montunato/');
+    
+    // Per ScrollSpy: raccogliamo le sezioni della homepage
+    const sections = [];
+    if (isHomePage) {
+        navItems.forEach(item => {
+            // Estrai l'ID, sia che sia href="#id" o href="index.html#id"
+            let targetId = '';
+            if (item.getAttribute('href').startsWith('#')) {
+                targetId = item.getAttribute('href').substring(1);
+            } else if (item.getAttribute('href').includes('#')) {
+                targetId = item.getAttribute('href').split('#')[1];
             }
             
-            // ScrollSpy Logic
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (window.scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navItems.forEach(a => {
-                // Ignore the btn-primary styling
-                if(!a.classList.contains('btn-primary')) {
-                    a.classList.remove('active');
-                    if (a.getAttribute('href') === `#${current}`) {
-                        a.classList.add('active');
-                    }
-                }
-            });
-        });
-    }
-
-    // Smooth Scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#' || targetId.includes('.html')) return;
-            
-            if (targetId.startsWith('#')) {
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    e.preventDefault();
-                    const headerOffset = 80;
-                    const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
+            if (targetId) {
+                const section = document.getElementById(targetId);
+                if (section) {
+                    sections.push({
+                        element: section,
+                        link: item
                     });
                 }
             }
         });
-    });
-});
+    }
 
-    // Intersection Observer for Reveal Animations
-    const revealElements = document.querySelectorAll('.reveal, .sector-card, .brand-card');
-    
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                
-                // If it's a stats counter, trigger the animation
-                if (entry.target.classList.contains('stat-item')) {
-                    const numberEl = entry.target.querySelector('.stat-number');
-                    if (numberEl && !numberEl.classList.contains('counted')) {
-                        const target = parseInt(numberEl.getAttribute('data-target'));
-                        animateValue(numberEl, 0, target, 2000);
-                        numberEl.classList.add('counted');
-                    }
-                }
-                
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        root: null,
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-    });
-
-    revealElements.forEach(el => {
-        // Add reveal class to cards that don't have it explicitly
-        if (!el.classList.contains('reveal')) {
-            el.classList.add('reveal');
+    window.addEventListener('scroll', () => {
+        // Navbar Scrolled style
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
-        revealObserver.observe(el);
-    });
-
-    // Function to animate numbers
-    function animateValue(obj, start, end, duration) {
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            // easeOutQuart easing function
-            const easeProgress = 1 - Math.pow(1 - progress, 4);
-            obj.innerHTML = Math.floor(easeProgress * (end - start) + start);
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            } else {
-                obj.innerHTML = end;
-            }
-        };
-        window.requestAnimationFrame(step);
-    }
-
-
-
-    // === LIGHT/DARK MODE TOGGLE ===
-    const themeToggles = document.querySelectorAll('.theme-toggle');
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    // Check for saved user preference, if any, on load of the website
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme == 'dark') {
-        document.body.classList.add('dark-theme');
-    } else if (currentTheme == 'light') {
-        document.body.classList.remove('dark-theme');
-    } else if (prefersDarkScheme.matches) {
-        // If no preference is stored, use system preference
-        document.body.classList.add('dark-theme');
-    }
-
-    // Toggle logic with View Transitions API (Light/Dark expanding circle)
-    themeToggles.forEach(toggle => {
-        toggle.addEventListener('click', (e) => {
-            const toggleTheme = () => {
-                document.body.classList.toggle('dark-theme');
-                const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-                localStorage.setItem('theme', theme);
-            };
-
-            // Check if browser supports View Transitions API
-            if (!document.startViewTransition) {
-                toggleTheme();
-                return;
-            }
-
-            // Get click coordinates
-            const x = e.clientX;
-            const y = e.clientY;
-
-            // Calculate the distance to the furthest corner to ensure full coverage
-            const endRadius = Math.hypot(
-                Math.max(x, innerWidth - x),
-                Math.max(y, innerHeight - y)
-            );
-
-            // Start the transition
-            const transition = document.startViewTransition(() => {
-                toggleTheme();
-            });
-
-            // Wait for pseudo-elements to be created, then animate
-            transition.ready.then(() => {
-                const clipPath = [
-                    `circle(0px at ${x}px ${y}px)`,
-                    `circle(${endRadius}px at ${x}px ${y}px)`
-                ];
-
-                document.documentElement.animate(
-                    {
-                        clipPath: clipPath,
-                    },
-                    {
-                        duration: 500,
-                        easing: 'ease-out',
-                        pseudoElement: '::view-transition-new(root)',
-                    }
-                );
-            });
-        });
-    });
-
-    // === SPOTLIGHT EFFECT (LIGHTING THEME) ===
-    const spotlightCards = document.querySelectorAll('.sector-card, .brand-ext-card, .stat-item, .contact-form-panel');
-    
-    spotlightCards.forEach(card => {
-        card.classList.add('spotlight-card');
         
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+        // ScrollSpy logic (only on home page where sections exist)
+        if (isHomePage && sections.length > 0) {
+            let current = '';
+            const scrollPosition = window.scrollY + window.innerHeight / 3; // Punto di intersezione
             
-            card.style.setProperty('--mouse-x', x + 'px');
-            card.style.setProperty('--mouse-y', y + 'px');
+            sections.forEach(sec => {
+                const sectionTop = sec.element.offsetTop;
+                const sectionHeight = sec.element.offsetHeight;
+                
+                // Se la posizione di scroll è all'interno della sezione
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    current = sec.link;
+                }
+            });
+            
+            // Caso speciale per l'ultima sezione (se siamo arrivati in fondo alla pagina)
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
+                current = sections[sections.length - 1].link;
+            }
+            
+            // Aggiorna le classi active
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (current) {
+                current.classList.add('active');
+            } else if (window.scrollY < sections[0].element.offsetTop) {
+                // Se siamo in cima prima della prima sezione
+                sections[0].link.classList.add('active');
+            }
+        }
+    });
+    
+    // Inizializza subito lo stato (nel caso la pagina venga caricata già a metà scroll)
+    window.dispatchEvent(new Event('scroll'));
+
+    // 3. Reveal Animations on Scroll
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealOnScroll = () => {
+        const windowHeight = window.innerHeight;
+        const elementVisible = 150;
+
+        revealElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            
+            if (elementTop < windowHeight - elementVisible) {
+                element.classList.add('active');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Trigger immediately for elements in viewport on load
+
+    // 4. Smooth Scrolling for Anchor Links (Home Page mostly)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const navHeight = document.querySelector('.navbar').offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - navHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 
+    // 5. Stat Counter Animation
+    const stats = document.querySelectorAll('.stat-number');
+    let hasAnimated = false;
 
-    // === COOKIE BANNER LOGIC ===
+    const animateStats = () => {
+        if (hasAnimated) return;
+
+        stats.forEach(stat => {
+            const elementTop = stat.getBoundingClientRect().top;
+            if (elementTop < window.innerHeight - 50) {
+                hasAnimated = true; // Previene ri-animazione
+                
+                const target = parseInt(stat.getAttribute('data-target'));
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+                
+                let current = 0;
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        stat.innerText = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        stat.innerText = target;
+                    }
+                };
+                updateCounter();
+            }
+        });
+    };
+
+    window.addEventListener('scroll', animateStats);
+    animateStats(); // Check on load
+
+    // 6. Theme Toggle (Light/Dark Mode)
+    const themeBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    // Check local storage for preference
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
+        body.classList.add('dark-theme');
+    }
+
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            
+            // Save preference
+            if (body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+
+    // 7. Cookie Banner Logic
     const cookieBanner = document.getElementById('cookie-banner');
-    const cookieAccept = document.getElementById('cookie-accept');
-    const cookieReject = document.getElementById('cookie-reject');
-    const openCookieSettings = document.getElementById('open-cookie-settings');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+    const settingsBtn = document.getElementById('open-cookie-settings');
 
     if (cookieBanner) {
-        // Check if user has already made a choice
-        const cookieChoice = localStorage.getItem('cookieChoice');
-        
-        if (!cookieChoice) {
-            // Slight delay before showing banner for better UX
+        // Show banner after short delay if no preference saved
+        if (!localStorage.getItem('cookie_preference')) {
             setTimeout(() => {
                 cookieBanner.classList.add('show');
             }, 1000);
         }
 
-        const handleCookieAction = (choice) => {
-            localStorage.setItem('cookieChoice', choice);
+        const closeBannerAndSave = (pref) => {
+            localStorage.setItem('cookie_preference', pref);
             cookieBanner.classList.remove('show');
-            
-            // If accepted, we could initialize analytics here
-            if (choice === 'accepted') {
-                console.log('Cookies accepted - initializing analytics...');
-            }
         };
 
-        if (cookieAccept) {
-            cookieAccept.addEventListener('click', () => handleCookieAction('accepted'));
+        if (acceptBtn) {
+            acceptBtn.addEventListener('click', () => closeBannerAndSave('all'));
         }
 
-        if (cookieReject) {
-            cookieReject.addEventListener('click', () => handleCookieAction('rejected'));
+        if (rejectBtn) {
+            rejectBtn.addEventListener('click', () => closeBannerAndSave('essential'));
         }
 
-        // Allow user to reopen cookie settings from footer
-        if (openCookieSettings) {
-            openCookieSettings.addEventListener('click', (e) => {
-                e.preventDefault();
+        if (settingsBtn) {
+            settingsBtn.addEventListener('click', () => {
                 cookieBanner.classList.add('show');
             });
         }
     }
 
-    // === CATALOGS MODAL LOGIC ===
+    // 8. Dynamic Products Slider (Youtube)
+    const initSlider = () => {
+        const sliderTrack = document.getElementById('prodotti-grid');
+        const prevBtn = document.getElementById('slider-prev');
+        const nextBtn = document.getElementById('slider-next');
+        const dotsContainer = document.getElementById('slider-dots');
+        
+        if (!sliderTrack) return;
 
-    // === CATALOGS MODAL LOGIC ===
-    const catalogData = {
-        'https://www.eta.it': { name: 'ETA', folder: 'eta' },
-        'https://www.arcluce.it': { name: 'Arcluce', folder: 'arcluce' },
-        'https://www.amra-chauvin-arnoux.it': { name: 'AMRA', folder: 'amra' },
-        'https://www.chauvin-arnoux.com/it': { name: 'Chauvin Arnoux', folder: 'chauvin_arnoux' },
-        'https://www.icar.com': { name: 'Icar', folder: 'icar' },
-        'https://www.ortea.com/it': { name: 'Ortea', folder: 'ortea' },
-        'https://www.ilme.com/it': { name: 'ILME', folder: 'ilme' },
-        'https://www.teknomega.it': { name: 'Teknomega', folder: 'teknomega' },
-        'https://www.zamet.it': { name: 'Zamet', folder: 'zamet' }
+        // Dati dei video di YouTube
+        const videos = [
+            { id: "JcO06t7z268", brand: "Ortea", title: "Presentazione Aziendale e Prodotti" },
+            { id: "9E_q_9v3j2Q", brand: "Teknomega", title: "Soluzioni per Cablaggio e Quadristica" },
+            { id: "mJ2L4Dmsr4o", brand: "Zamet", title: "Sistemi di Canalizzazione Portacavi" },
+            { id: "5z_E2vOq7L4", brand: "ILME", title: "Connettori Industriali Multipolari" },
+            { id: "A5PzZ-m-rN0", brand: "Arcluce", title: "Illuminazione Architetturale LED" },
+            { id: "T9_8Vb0s1_M", brand: "ETA", title: "Quadri Elettrici in Acciaio Inox" },
+            { id: "8k2_H6g-Y4Y", brand: "Chauvin Arnoux", title: "Strumentazione di Misura e Collaudo" },
+            { id: "M9_0Y5k1-hI", brand: "Icar", title: "Rifasamento e Condensatori" },
+            { id: "K3_9L5m-G6H", brand: "AMRA", title: "Relè Elettromeccanici di Sicurezza" }
+        ];
+
+        // Se non ci sono video, nascondi la sezione
+        if (videos.length === 0) {
+            document.getElementById('prodotti-vetrina').style.display = 'none';
+            return;
+        }
+
+        // Genera le card dei video
+        sliderTrack.innerHTML = videos.map((video, index) => `
+            <div class="video-card" data-index="${index}">
+                <div class="video-thumbnail-wrapper" onclick="openVideo('${video.id}')">
+                    <img src="https://img.youtube.com/vi/${video.id}/maxresdefault.jpg" 
+                         alt="${video.title}" 
+                         class="video-thumbnail"
+                         onerror="this.src='https://img.youtube.com/vi/${video.id}/hqdefault.jpg'">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div class="video-brand">${video.brand}</div>
+                    <h4 class="video-title">${video.title}</h4>
+                </div>
+            </div>
+        `).join('');
+
+        // Logica dello Slider
+        let currentSlide = 0;
+        let cardsPerView = window.innerWidth > 768 ? 3 : 1;
+        const totalSlides = Math.ceil(videos.length / cardsPerView);
+
+        // Genera i punti
+        if (dotsContainer) {
+            dotsContainer.innerHTML = Array.from({ length: totalSlides }).map((_, i) => 
+                `<div class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`
+            ).join('');
+
+            // Aggiungi event listener ai punti
+            const dots = dotsContainer.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+            });
+        }
+
+        const updateSlider = () => {
+            const cardWidth = 100 / cardsPerView;
+            sliderTrack.style.transform = `translateX(-${currentSlide * cardsPerView * cardWidth}%)`;
+            
+            // Aggiorna stato pulsanti
+            if (prevBtn) prevBtn.disabled = currentSlide === 0;
+            if (nextBtn) nextBtn.disabled = currentSlide >= totalSlides - 1;
+
+            // Aggiorna punti
+            if (dotsContainer) {
+                const dots = dotsContainer.querySelectorAll('.dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+        };
+
+        const goToSlide = (index) => {
+            currentSlide = index;
+            updateSlider();
+        };
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlider();
+                }
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateSlider();
+                }
+            });
+        }
+
+        // Gestione ridimensionamento finestra
+        window.addEventListener('resize', () => {
+            const newCardsPerView = window.innerWidth > 768 ? 3 : 1;
+            if (newCardsPerView !== cardsPerView) {
+                cardsPerView = newCardsPerView;
+                currentSlide = 0; // Resetta alla prima slide
+                // Ricrea i punti se necessario
+                const newTotalSlides = Math.ceil(videos.length / cardsPerView);
+                if (dotsContainer) {
+                    dotsContainer.innerHTML = Array.from({ length: newTotalSlides }).map((_, i) => 
+                        `<div class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`
+                    ).join('');
+                    
+                    const dots = dotsContainer.querySelectorAll('.dot');
+                    dots.forEach((dot, index) => {
+                        dot.addEventListener('click', () => goToSlide(index));
+                    });
+                }
+                updateSlider();
+            }
+        });
+
+        // Inizializza stato iniziale
+        updateSlider();
     };
 
-    const modalOverlay = document.getElementById('catalog-modal');
-    const modalCloseBtn = document.querySelector('.modal-close');
-    const modalBrandName = document.getElementById('modal-brand-name');
-    const modalCatalogList = document.getElementById('modal-catalog-list');
-    const openModalBtns = document.querySelectorAll('.open-catalog-modal');
+    initSlider();
 
-    if (modalOverlay) {
-        // Open Modal
-        openModalBtns.forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                const brandKey = btn.getAttribute('data-brand');
-                const data = catalogData[brandKey];
-                
-                if (data) {
-                    modalBrandName.textContent = 'Cataloghi ' + data.name;
+    // Funzione globale per aprire il modale video
+    window.openVideo = (videoId) => {
+        const modal = document.getElementById('video-modal');
+        const iframe = document.getElementById('youtube-player');
+        
+        if (modal && iframe) {
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Previeni scroll della pagina
+        }
+    };
+
+    // Chiudi modale video
+    const videoModal = document.getElementById('video-modal');
+    const closeVideoBtn = document.getElementById('close-video-modal');
+
+    const closeVideoModal = () => {
+        if (videoModal) {
+            const iframe = document.getElementById('youtube-player');
+            if (iframe) iframe.src = ''; // Ferma il video
+            videoModal.classList.remove('active');
+            document.body.style.overflow = ''; // Ripristina scroll
+        }
+    };
+
+    if (closeVideoBtn) {
+        closeVideoBtn.addEventListener('click', closeVideoModal);
+    }
+
+    if (videoModal) {
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                closeVideoModal();
+            }
+        });
+    }
+    
+    // 9. Catalog Modal System
+    const catalogModal = document.getElementById('catalog-modal');
+    const closeCatalogBtn = document.getElementById('close-catalog-modal');
+    const modalBrandTitle = document.getElementById('modal-brand-title');
+    const modalCatalogList = document.getElementById('catalog-files-list');
+    
+    if (catalogModal && closeCatalogBtn) {
+        
+        // Funzione per chiudere il modale e ripristinare il body
+        const closeCatalogModal = () => {
+            catalogModal.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        // Chiudi cliccando la X
+        closeCatalogBtn.addEventListener('click', closeCatalogModal);
+
+        // Chiudi cliccando fuori dal contenuto
+        catalogModal.addEventListener('click', (e) => {
+            if (e.target === catalogModal) {
+                closeCatalogModal();
+            }
+        });
+
+        // Aggiungi event listener a tutte le card brand che hanno la classe
+        document.querySelectorAll('.open-catalog-modal').forEach(card => {
+            card.addEventListener('click', async function() {
+                const brandKey = this.getAttribute('data-brand');
+                if (brandKey) {
                     
-                    modalOverlay.classList.add('active');
+                    // Mostra il modale e cambia il titolo per prima cosa (UI instantanea)
+                    const data = getBrandData(brandKey);
+                    modalBrandTitle.textContent = `Cataloghi ${data.displayName}`;
+                    catalogModal.classList.add('active');
                     document.body.style.overflow = 'hidden'; // Prevent scrolling
                     
                     // Show loading state
@@ -302,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         if (!response.ok) {
                             if (response.status === 404) {
-                                modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-secondary);">Nessun catalogo caricato al momento per questa azienda.</p>';
+                                modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-secondary); line-height: 1.6;">Nessun catalogo caricato al momento per questa azienda.<br>Per ricevere maggiori informazioni in merito, <a href="index.html#contatti" onclick="document.getElementById(\'close-catalog-modal\').click();" style="color: var(--accent-primary); text-decoration: underline; font-weight: 500;">contattaci</a>.</p>';
                                 return;
                             }
                             throw new Error('Errore API GitHub');
@@ -314,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         modalCatalogList.innerHTML = '';
                         
                         if (pdfs.length === 0) {
-                            modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-secondary);">Nessun catalogo caricato al momento per questa azienda.</p>';
+                            modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-secondary); line-height: 1.6;">Nessun catalogo caricato al momento per questa azienda.<br>Per ricevere maggiori informazioni in merito, <a href="index.html#contatti" onclick="document.getElementById(\'close-catalog-modal\').click();" style="color: var(--accent-primary); text-decoration: underline; font-weight: 500;">contattaci</a>.</p>';
                             return;
                         }
                         
@@ -323,277 +465,45 @@ document.addEventListener('DOMContentLoaded', () => {
                             let label = file.name.substring(0, file.name.lastIndexOf('.'));
                             label = label.replace(/[_-]/g, ' ');
                             
-                            const link = document.createElement('a');
-                            link.href = `cataloghi/${data.folder}/${file.name}`;
-                            link.download = '';
-                            link.className = 'catalog-item';
-                            link.innerHTML = `
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                ${label}
+                            // Formatta la dimensione
+                            const sizeKB = (file.size / 1024).toFixed(1);
+                            const sizeText = sizeKB > 1024 ? (sizeKB / 1024).toFixed(1) + ' MB' : sizeKB + ' KB';
+                            
+                            const html = `
+                                <a href="${file.download_url}" target="_blank" class="catalog-file-item">
+                                    <div class="catalog-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                    </div>
+                                    <span class="catalog-name">${label}</span>
+                                    <span class="catalog-meta">PDF • ${sizeText}</span>
+                                </a>
                             `;
-                            modalCatalogList.appendChild(link);
+                            modalCatalogList.insertAdjacentHTML('beforeend', html);
                         });
                         
                     } catch (error) {
-                        console.error('Errore durante il caricamento dei cataloghi:', error);
-                        modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--error);">Si è verificato un errore nel caricamento dei cataloghi. Riprova più tardi.</p>';
+                        console.error('Error fetching catalogs:', error);
+                        modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--accent-primary);">Errore durante il caricamento dei cataloghi. Riprova più tardi.</p>';
                     }
                 }
             });
         });
-
-        // Close Modal logic
-        const closeModal = () => {
-            modalOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        };
-
-        if(modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
-        
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeModal();
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
-                closeModal();
-            }
-        });
     }
+});
 
-    // === VIDEO VETRINA LOGIC (YOUTUBE AUTOMATION) ===
-    const loadYouTubeVetrina = async () => {
-        const prodottiGrid = document.getElementById('prodotti-grid');
-        if (!prodottiGrid) return;
-        
-        prodottiGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; width: 100%;"><div class="spinner" style="margin: 0 auto 1rem;"></div><p>Sincronizzazione vetrina prodotti in corso...</p></div>';
-
-        // Official YouTube Channel IDs for the brands
-        const brands = [
-            { id: 'UC8RUoMHUXQrcxb8_hj_A08w', name: 'ETA S.p.A.' },
-            { id: 'UC-qS9T55vW4a-9L8a-6l2_A', name: 'Arcluce' },
-            { id: 'UC-m-R2pY_D_S834p5r1-z_Q', name: 'ILME' },
-            { id: 'UCqwcSga4ZzG3ntf6hYRu_Nw', name: 'Ortea Next' },
-            { id: 'UCx39e9waTxaUg8GdQ7P7NUg', name: 'AMRA' },
-            { id: 'UCYfG3qD5q2cJXlpq6YHtGbA', name: 'Chauvin Arnoux' },
-            { id: 'UCIH8vVkJ4wY0ojELBHSUpiw', name: 'Teknomega' },
-            { id: 'UCnPpV1pxJb6qZ6IKGXfuqUw', name: 'Zamet SpA' }
-        ];
-        
-        try {
-            let allVideos = [];
-            
-            // Parole chiave per identificare video di prodotti/tecnici (incluso l'inglese per i canali internazionali come Chauvin Arnoux UK)
-            const technicalKeywords = [
-                'nuovo', 'nuova', 'prodotto', 'gamma', 'quadro', 'quadri', 'installazione', 'tecnic', 'serie', 'sistema', 'soluzion', 'illuminazione', 'led', 'catalogo', 'novità', 'tutorial', 'guida', 'accessori', 'inox', 'relè', 'stabilizzator', 'condizionator', 'fiera', 'sps', 'presentazione', 'strument', 'misura',
-                'product', 'steel', 'tester', 'unboxing', 'guide', 'multifunction', 'system', 'monitoring', 'energy', 'logger', 'efficiency', 'accessories', 'solution', 'instrument', 'measurement', 'how to', 'overview', 'features', 'industrial', 'commercial', 'meter'
-            ];
-
-            // Calcola la data limite (esattamente 6 mesi fa)
-            const sixMonthsAgo = new Date();
-            sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-            const sixMonthsAgoTime = sixMonthsAgo.getTime();
-
-            // Fetch videos from all channels in parallel
-            await Promise.all(brands.map(async (brand) => {
-                const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${brand.id}`;
-                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
-                
-                try {
-                    const response = await fetch(apiUrl);
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.status === 'ok' && data.items) {
-                            
-                            // Filtra solo i video tecnici e caricati negli ultimi 6 mesi
-                            const techVideos = data.items.filter(item => {
-                                const titleLower = item.title.toLowerCase();
-                                const isTechnical = technicalKeywords.some(kw => titleLower.includes(kw));
-                                const isRecent = new Date(item.pubDate).getTime() >= sixMonthsAgoTime;
-                                return isTechnical && isRecent;
-                            });
-
-                            // Prendi i primi 5 video tecnici per ogni brand
-                            const items = techVideos.slice(0, 5).map(item => ({
-                                ...item,
-                                brandName: brand.name,
-                                timestamp: new Date(item.pubDate).getTime()
-                            }));
-                            allVideos = allVideos.concat(items);
-                        }
-                    }
-                } catch (e) {
-                    console.error(`Errore caricamento brand ${brand.name}:`, e);
-                }
-            }));
-            
-            // Sort all collected videos by newest first
-            allVideos.sort((a, b) => b.timestamp - a.timestamp);
-            
-            // Take the newest 15 overall to display in the grid
-            const displayVideos = allVideos.slice(0, 15);
-            
-            if (displayVideos.length === 0) {
-                prodottiGrid.innerHTML = '<p style="color: var(--text-secondary); width: 100%; text-align: center;">Nessun video prodotto disponibile al momento.</p>';
-                return;
-            }
-            
-            let html = '';
-            displayVideos.forEach(video => {
-                // Formatting Date
-                const dateObj = new Date(video.pubDate);
-                const formattedDate = dateObj.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
-                
-                // Extract YouTube Video ID
-                const videoId = video.link.includes('v=') ? video.link.split('v=')[1].split('&')[0] : '';
-
-                html += `
-                    <div class="product-card">
-                        <div class="product-image-container" style="position: relative; cursor: pointer;" onclick="openVideo('${videoId}')">
-                            <img src="${video.thumbnail}" alt="${video.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div style="position: absolute; background: rgba(0,0,0,0.6); color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                                <span class="product-brand">${video.brandName}</span>
-                                <span style="font-size: 0.8rem; color: var(--text-secondary);">${formattedDate}</span>
-                            </div>
-                            <h3 class="product-title" style="font-size: 1.1rem;">${video.title}</h3>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            prodottiGrid.innerHTML = html;
-            
-            // Inizializza logica Slider
-            initSlider(displayVideos.length);
-            
-        } catch (error) {
-            console.error('Errore globale caricamento vetrina video:', error);
-            prodottiGrid.innerHTML = '<p style="color: var(--error); width: 100%; text-align: center;">Si è verificato un errore nel caricamento della Vetrina Automatica.</p>';
-        }
+// Helper Function per mappare il brand in folder GitHub
+function getBrandData(brandKey) {
+    const registry = {
+        'eta': { folder: 'eta', displayName: 'ETA' },
+        'arcluce': { folder: 'arcluce', displayName: 'Arcluce' },
+        'amra': { folder: 'amra', displayName: 'AMRA' },
+        'chauvin-arnoux': { folder: 'chauvin-arnoux', displayName: 'Chauvin Arnoux' },
+        'icar': { folder: 'icar', displayName: 'Icar' },
+        'ilme': { folder: 'ilme', displayName: 'ILME' },
+        'ortea': { folder: 'ortea', displayName: 'Ortea' },
+        'teknomega': { folder: 'teknomega', displayName: 'Teknomega' },
+        'zamet': { folder: 'zamet', displayName: 'Zamet' }
     };
     
-    // Funzione per gestire lo slider
-    function initSlider(totalItems) {
-        const track = document.getElementById('prodotti-grid');
-        const prevBtn = document.getElementById('slider-prev');
-        const nextBtn = document.getElementById('slider-next');
-        const dotsContainer = document.getElementById('slider-dots');
-        
-        if(!track || !prevBtn || !nextBtn) return;
-        
-        let currentIndex = 0;
-        
-        // Calcola quanti elementi mostrare in base alla finestra
-        let itemsPerView = window.innerWidth <= 768 ? 1 : window.innerWidth <= 992 ? 2 : 3;
-        let maxIndex = Math.max(0, totalItems - itemsPerView);
-        
-        // Genera i dots
-        dotsContainer.innerHTML = '';
-        const numDots = Math.ceil(totalItems / itemsPerView);
-        for(let i=0; i<numDots; i++) {
-            const dot = document.createElement('div');
-            dot.className = `slider-dot ${i===0 ? 'active' : ''}`;
-            dot.addEventListener('click', () => {
-                currentIndex = Math.min(i * itemsPerView, maxIndex);
-                updateSlider();
-            });
-            dotsContainer.appendChild(dot);
-        }
-        
-        function updateSlider() {
-            // Aggiorna offset track
-            const itemWidth = track.children[0].offsetWidth;
-            const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
-            const moveAmount = (itemWidth + gap) * currentIndex;
-            track.style.transform = `translateX(-${moveAmount}px)`;
-            
-            // Aggiorna stato bottoni
-            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
-            
-            // Aggiorna dots
-            const activeDotIndex = Math.floor(currentIndex / itemsPerView);
-            Array.from(dotsContainer.children).forEach((dot, index) => {
-                dot.classList.toggle('active', index === activeDotIndex);
-            });
-        }
-        
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex = Math.max(0, currentIndex - itemsPerView);
-                updateSlider();
-            }
-        });
-        
-        nextBtn.addEventListener('click', () => {
-            if (currentIndex < maxIndex) {
-                currentIndex = Math.min(maxIndex, currentIndex + itemsPerView);
-                updateSlider();
-            }
-        });
-        
-        window.addEventListener('resize', () => {
-            itemsPerView = window.innerWidth <= 768 ? 1 : window.innerWidth <= 992 ? 2 : 3;
-            maxIndex = Math.max(0, totalItems - itemsPerView);
-            if(currentIndex > maxIndex) currentIndex = maxIndex;
-            updateSlider();
-            
-            // Rigenera dots su resize per correttezza
-            dotsContainer.innerHTML = '';
-            const numDots = Math.ceil(totalItems / itemsPerView);
-            for(let i=0; i<numDots; i++) {
-                const dot = document.createElement('div');
-                dot.className = `slider-dot ${Math.floor(currentIndex/itemsPerView)===i ? 'active' : ''}`;
-                dot.addEventListener('click', () => {
-                    currentIndex = Math.min(i * itemsPerView, maxIndex);
-                    updateSlider();
-                });
-                dotsContainer.appendChild(dot);
-            }
-        });
-        
-        updateSlider();
-    }
-    
-    loadYouTubeVetrina();
-
-    // === VIDEO MODAL LOGIC ===
-    window.openVideo = function(videoId) {
-        if (!videoId) return;
-        const videoModal = document.getElementById('video-modal');
-        const youtubePlayer = document.getElementById('youtube-player');
-        if (videoModal && youtubePlayer) {
-            youtubePlayer.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
-            videoModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-    };
-
-    const closeVideoModal = document.getElementById('close-video-modal');
-    if (closeVideoModal) {
-        closeVideoModal.addEventListener('click', () => {
-            const videoModal = document.getElementById('video-modal');
-            const youtubePlayer = document.getElementById('youtube-player');
-            if (videoModal && youtubePlayer) {
-                videoModal.classList.remove('active');
-                youtubePlayer.src = '';
-                document.body.style.overflow = '';
-            }
-        });
-    }
-
-    // Close video modal on outside click
-    window.addEventListener('click', (e) => {
-        const videoModal = document.getElementById('video-modal');
-        if (videoModal && e.target === videoModal) {
-            const youtubePlayer = document.getElementById('youtube-player');
-            videoModal.classList.remove('active');
-            if (youtubePlayer) youtubePlayer.src = '';
-            document.body.style.overflow = '';
-        }
-    });
+    return registry[brandKey] || { folder: brandKey, displayName: brandKey.toUpperCase() };
+}
