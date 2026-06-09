@@ -242,72 +242,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // === CATALOGS MODAL LOGIC ===
     const catalogData = {
-        'https://www.eta.it': {
-            name: 'ETA',
-            officialLink: 'https://www.eta.it/it/cataloghi/',
-            catalogs: [
-                { name: 'Catalogo Generale', file: 'cataloghi/catalogo_2026_eta.pdf' },
-                { name: 'Listino Prezzi', file: 'cataloghi/listino_2026_eta.pdf' }
-            ]
-        },
-        'https://www.arcluce.it': {
-            name: 'Arcluce',
-            officialLink: 'https://www.arcluce.it/it/download',
-            catalogs: [
-                { name: 'Catalogo Indoor 2026', file: 'cataloghi/catalogo_2026_arcluce.pdf' },
-                { name: 'Catalogo Outdoor 2026', file: 'cataloghi/outdoor_2026_arcluce.pdf' }
-            ]
-        },
-        'https://www.amra-chauvin-arnoux.it': {
-            name: 'AMRA',
-            officialLink: 'https://www.amra-chauvin-arnoux.it/',
-            catalogs: [
-                { name: 'Catalogo Strumentazione 2026', file: 'cataloghi/catalogo_2026_amra.pdf' }
-            ]
-        },
-        'https://www.chauvin-arnoux.com/it': {
-            name: 'Chauvin Arnoux',
-            officialLink: 'https://www.chauvin-arnoux.com/it',
-            catalogs: [
-                { name: 'Catalogo Prodotti 2026', file: 'cataloghi/catalogo_2026_chauvin-arnoux.pdf' }
-            ]
-        },
-        'https://www.icar.com': {
-            name: 'Icar',
-            officialLink: 'https://www.icar.com/',
-            catalogs: [
-                { name: 'Catalogo Rifasamento 2026', file: 'cataloghi/catalogo_2026_icar.pdf' }
-            ]
-        },
-        'https://www.ortea.com/it': {
-            name: 'Ortea',
-            officialLink: 'https://www.ortea.com/it',
-            catalogs: [
-                { name: 'Catalogo Power Quality 2026', file: 'cataloghi/catalogo_2026_ortea.pdf' }
-            ]
-        },
-        'https://www.ilme.com/it': {
-            name: 'ILME',
-            officialLink: 'https://www.ilme.com/it/download/cataloghi/',
-            catalogs: [
-                { name: 'Catalogo Generale Connettori 2026', file: 'cataloghi/catalogo_2026_ilme.pdf' },
-                { name: 'Novità Prodotti 2026', file: 'cataloghi/novita_2026_ilme.pdf' }
-            ]
-        },
-        'https://www.teknomega.it': {
-            name: 'Teknomega',
-            officialLink: 'https://www.teknomega.it/',
-            catalogs: [
-                { name: 'Catalogo Fissaggio 2026', file: 'cataloghi/catalogo_2026_teknomega.pdf' }
-            ]
-        },
-        'https://www.zamet.it': {
-            name: 'Zamet',
-            officialLink: 'https://www.zamet.it/',
-            catalogs: [
-                { name: 'Catalogo Canalisazioni 2026', file: 'cataloghi/catalogo_2026_zamet.pdf' }
-            ]
-        }
+        'https://www.eta.it': { name: 'ETA', folder: 'eta', officialLink: 'https://www.eta.it/it/cataloghi/' },
+        'https://www.arcluce.it': { name: 'Arcluce', folder: 'arcluce', officialLink: 'https://www.arcluce.it/it/download' },
+        'https://www.amra-chauvin-arnoux.it': { name: 'AMRA', folder: 'amra', officialLink: 'https://www.amra-chauvin-arnoux.it/' },
+        'https://www.chauvin-arnoux.com/it': { name: 'Chauvin Arnoux', folder: 'chauvin_arnoux', officialLink: 'https://www.chauvin-arnoux.com/it' },
+        'https://www.icar.com': { name: 'Icar', folder: 'icar', officialLink: 'https://www.icar.com/' },
+        'https://www.ortea.com/it': { name: 'Ortea', folder: 'ortea', officialLink: 'https://www.ortea.com/it' },
+        'https://www.ilme.com/it': { name: 'ILME', folder: 'ilme', officialLink: 'https://www.ilme.com/it/download/cataloghi/' },
+        'https://www.teknomega.it': { name: 'Teknomega', folder: 'teknomega', officialLink: 'https://www.teknomega.it/' },
+        'https://www.zamet.it': { name: 'Zamet', folder: 'zamet', officialLink: 'https://www.zamet.it/' }
     };
 
     const modalOverlay = document.getElementById('catalog-modal');
@@ -320,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modalOverlay) {
         // Open Modal
         openModalBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 const brandKey = btn.getAttribute('data-brand');
                 const data = catalogData[brandKey];
@@ -329,22 +272,53 @@ document.addEventListener('DOMContentLoaded', () => {
                     modalBrandName.textContent = 'Cataloghi ' + data.name;
                     modalOfficialLink.href = data.officialLink;
                     
-                    // Populate catalog list
-                    modalCatalogList.innerHTML = '';
-                    data.catalogs.forEach(cat => {
-                        const link = document.createElement('a');
-                        link.href = cat.file;
-                        link.download = '';
-                        link.className = 'catalog-item';
-                        link.innerHTML = `
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            ${cat.name}
-                        `;
-                        modalCatalogList.appendChild(link);
-                    });
-                    
                     modalOverlay.classList.add('active');
                     document.body.style.overflow = 'hidden'; // Prevent scrolling
+                    
+                    // Show loading state
+                    modalCatalogList.innerHTML = '<div style="width:100%; text-align:center; padding: 2rem 0;"><div class="spinner" style="margin:0 auto 1rem;"></div><p style="color:var(--text-secondary);">Ricerca cataloghi in corso...</p></div>';
+                    
+                    try {
+                        const response = await fetch(`https://api.github.com/repos/ilmirco/montunatorappresentanze/contents/cataloghi/${data.folder}`);
+                        
+                        if (!response.ok) {
+                            if (response.status === 404) {
+                                modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-secondary);">Nessun catalogo caricato al momento per questa azienda.</p>';
+                                return;
+                            }
+                            throw new Error('Errore API GitHub');
+                        }
+                        
+                        const files = await response.json();
+                        const pdfs = files.filter(f => f.name.toLowerCase().endsWith('.pdf'));
+                        
+                        modalCatalogList.innerHTML = '';
+                        
+                        if (pdfs.length === 0) {
+                            modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-secondary);">Nessun catalogo caricato al momento per questa azienda.</p>';
+                            return;
+                        }
+                        
+                        pdfs.forEach(file => {
+                            // Format the name: remove .pdf, replace _ and - with spaces
+                            let label = file.name.substring(0, file.name.lastIndexOf('.'));
+                            label = label.replace(/[_-]/g, ' ');
+                            
+                            const link = document.createElement('a');
+                            link.href = `cataloghi/${data.folder}/${file.name}`;
+                            link.download = '';
+                            link.className = 'catalog-item';
+                            link.innerHTML = `
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                ${label}
+                            `;
+                            modalCatalogList.appendChild(link);
+                        });
+                        
+                    } catch (error) {
+                        console.error('Errore durante il caricamento dei cataloghi:', error);
+                        modalCatalogList.innerHTML = '<p style="text-align:center; width:100%; color:var(--error);">Si è verificato un errore nel caricamento dei cataloghi. Riprova più tardi.</p>';
+                    }
                 }
             });
         });
