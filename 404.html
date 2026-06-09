@@ -3,35 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagina Non Trovata | Montunato Rappresentanze</title>
+    <title>Pagina non trovata | Montunato Rappresentanze</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#DC2626">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2">
-    <style>
-        .error-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 2rem;
-        }
-        .error-code {
-            font-size: 8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-            line-height: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
-<body class="legal-page">
-    <header class="navbar scrolled" id="navbar">
+<body>
+    <header class="navbar" id="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo">
-                <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/01/solo_logo_montunato_rappresentanze_png-173x51.png" alt="Logo" class="logo-img">
+                <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/01/solo_logo_montunato_rappresentanze_png-173x51.png" alt="Montunato Rappresentanze Logo" class="logo-img">
+                <span class="logo-text">Montunato Rappresentanze</span>
             </a>
             <nav class="nav-links">
                 <a href="index.html#home">Home</a>
@@ -41,18 +25,22 @@
                 <a href="brands.html">Cataloghi</a>
                 <a href="index.html#contatti" class="btn-primary">Contatti</a>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema chiaro/scuro">
-                    <svg class="lightbulb-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </button>
             </nav>
         </div>
     </header>
 
-    <div class="error-page container">
-        <h1 class="error-code">404</h1>
-        <h2 class="title" style="margin-bottom: 1rem;">Pagina non trovata</h2>
-        <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 2rem;">La pagina che stai cercando potrebbe essere stata rimossa, aver cambiato nome o essere temporaneamente non disponibile.</p>
-        <a href="index.html" class="btn-primary">Torna alla Home</a>
-    </div>
-    <script src="script.js?v=2"></script>
+    <main class="section-padding bg-alt" style="padding-top: 200px; min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+        <div class="container">
+            <h1 class="title" style="font-size: clamp(6rem, 15vw, 10rem); margin-bottom: 0; color: var(--accent-primary);">404</h1>
+            <h2 class="section-title" style="margin-bottom: 1.5rem;">Pagina non trovata</h2>
+            <p style="color: var(--text-secondary); font-size: 1.25rem; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">Ci dispiace, la pagina che stai cercando potrebbe essere stata rimossa o l'indirizzo inserito non è corretto.</p>
+            <a href="index.html" class="btn-primary btn-large">Torna alla Home</a>
+        </div>
+    </main>
+
+    <script src="script.js?v=4"></script>
 </body>
 </html>
