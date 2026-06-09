@@ -3,30 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aziende Rappresentate - Montunato Rappresentanze</title>
-    <meta name="description" content="Scopri le aziende di eccellenza che Montunato Rappresentanze distribuisce in Puglia e Basilicata: ETA, Arcluce, Chauvin Arnoux e molte altre.">
+    <title>Aziende Rappresentate | Montunato Rappresentanze</title>
+    <meta name="description" content="Sfoglia i cataloghi dei brand rappresentati da Montunato Rappresentanze in Puglia e Basilicata.">
     
-    <!-- Open Graph / Social Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.montunatorappresentanze.it/brands.html">
-    <meta property="og:title" content="I Nostri Brands | Montunato Rappresentanze">
-    <meta property="og:description" content="Le eccellenze elettrotecniche, di automazione e illuminazione che rappresentiamo in Puglia e Basilicata.">
-    <meta property="og:image" content="https://www.montunatorappresentanze.it/wp-content/uploads/2025/01/solo_logo_montunato_rappresentanze_png-173x51.png">
-
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <meta name="theme-color" content="#DC2626">
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=3">
+    <style>
+        .page-header {
+            padding: 120px 0 60px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .page-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .page-description {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-
-    <!-- Header & Navigation -->
-    <header class="header">
+    <!-- Navbar -->
+    <header class="navbar scrolled" id="navbar">
         <div class="container nav-container">
             <a href="index.html" class="logo">
                 <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/01/solo_logo_montunato_rappresentanze_png-173x51.png" alt="Montunato Rappresentanze Logo" class="logo-img">
@@ -40,8 +47,7 @@
                 <a href="brands.html" style="color: var(--accent-primary);">Cataloghi</a>
                 <a href="index.html#contatti" class="btn-primary">Contatti</a>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Cambia tema chiaro/scuro">
-                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg class="lightbulb-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
                 </button>
             </nav>
             <button class="mobile-menu-btn" aria-label="Apri menu">
@@ -52,169 +58,130 @@
         </div>
     </header>
 
-    <!-- Mini Hero -->
-    <section class="cataloghi section" style="padding-top: 150px; min-height: auto;">
+    <div class="page-header">
         <div class="container">
-            <h1 class="section-title" style="text-align: left; margin-bottom: 1rem;">Aziende <span class="text-gradient">Rappresentate</span></h1>
-            <p class="section-subtitle" style="text-align: left; margin-bottom: 3rem;">Scopri le aziende di eccellenza che rappresentiamo sul territorio. Clicca sui loghi per visitare i siti web ufficiali.</p>
-            
-            <div class="brands-external-grid">
-                
+            <h1 class="page-title title">Aziende <span class="text-gradient">Rappresentate</span></h1>
+            <p class="page-description">Sfoglia i cataloghi aggiornati di tutte le aziende che rappresentiamo. Clicca su un marchio per consultare i documenti disponibili.</p>
+        </div>
+    </div>
+
+    <!-- Brands/Catalogs Section -->
+    <section class="section-padding bg-alt">
+        <div class="container">
+            <div class="brands-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
                 <!-- ETA -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/eta-passion.svg" alt="ETA">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.eta.it" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.eta.it" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="eta" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/eta-passion.svg" alt="ETA">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
 
                 <!-- Arcluce -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/ARCLUCE.png" alt="Arcluce">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.arcluce.it" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.arcluce.it" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="arcluce" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/ARCLUCE.png" alt="Arcluce">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
 
                 <!-- AMRA -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/amra.png" alt="AMRA">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.amra-chauvin-arnoux.it" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.amra-chauvin-arnoux.it" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="amra" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/amra.png" alt="AMRA">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
 
                 <!-- Chauvin Arnoux -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/CHAUVIN-ARNOUX.jpg" alt="Chauvin Arnoux">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.chauvin-arnoux.com/it" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.chauvin-arnoux.com/it" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="chauvin-arnoux" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/CHAUVIN-ARNOUX.jpg" alt="Chauvin Arnoux">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
 
                 <!-- Icar -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/icar2.png" alt="Icar">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.icar.com" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.icar.com" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="icar" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/icar2.png" alt="Icar">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
 
                 <!-- ILME -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/ilme.jpeg" alt="ILME">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.ilme.com/it" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.ilme.com/it" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="ilme" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/ilme.jpeg" alt="ILME">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
 
                 <!-- Ortea -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/ortea2.png" alt="Ortea">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.ortea.com/it" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.ortea.com/it" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="ortea" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/ortea2.png" alt="Ortea">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
 
                 <!-- Teknomega -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/Teknomega.png" alt="Teknomega">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.teknomega.it" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.teknomega.it" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="teknomega" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/Teknomega.png" alt="Teknomega">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
 
                 <!-- Zamet -->
-                <div class="brand-ext-card">
-                    <div class="brand-ext-logo">
-                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/Zamet-2.png" alt="Zamet">
-                    </div>
-                    <div class="brand-actions-container" style="display: flex; flex-direction: column; gap: 0.8rem; width: 100%; margin-top: 1.5rem;">
-                        <a href="https://www.zamet.it" target="_blank" class="btn-secondary" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
-                            Sito Web
-                        </a>
-                        <button class="btn-primary open-catalog-modal" data-brand="https://www.zamet.it" style="width: 100%; text-align: center; padding: 0.6rem 1rem; font-size: 0.9rem; cursor: pointer;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px; display: inline-block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            Cataloghi
-                        </button>
+                <div class="brand-card open-catalog-modal" data-brand="zamet" style="cursor: pointer; position: relative;">
+                    <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/02/Zamet-2.png" alt="Zamet">
+                    <div class="catalog-hover-layer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <span>Vedi Cataloghi</span>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
+    <!-- Catalog Modal -->
+    <div id="catalog-modal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-brand-title">Cataloghi Azienda</h3>
+                <button class="close-modal" id="close-catalog-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">Seleziona un catalogo per visualizzarlo o scaricarlo.</p>
+                
+                <div id="catalog-files-list" class="catalog-files-grid">
+                    <!-- Files will be injected here via JavaScript -->
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted); grid-column: 1 / -1;">
+                        <p>Caricamento cataloghi in corso...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Montunato Rappresentanze</h3>
-                    <p>Esperienza pluridecennale nella vendita e rappresentanza di materiale elettrico industriale, automazione e illuminazione in Puglia e Basilicata.</p>
+            <div class="footer-grid">
+                <div class="footer-info" style="max-width: 100%;">
+                    <a href="index.html" class="logo footer-logo">
+                        <img src="https://www.montunatorappresentanze.it/wp-content/uploads/2025/01/solo_logo_montunato_rappresentanze_png-173x51.png" alt="Montunato Rappresentanze Logo" class="logo-img">
+                    </a>
+                    <p class="footer-desc" style="max-width: 500px;">Agenzia di rappresentanza di materiale elettrico, automazione e illuminazione in Puglia e Basilicata.</p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -227,23 +194,6 @@
         </div>
     </footer>
 
-    
-    <!-- Catalogs Modal -->
-    <div id="catalog-modal" class="modal-overlay">
-        <div class="modal-container">
-            <button class="modal-close" aria-label="Chiudi finestra">&times;</button>
-            <div class="modal-header">
-                <h3 id="modal-brand-name">Cataloghi Azienda</h3>
-            </div>
-            <div class="modal-body">
-
-                <h4 style="margin-bottom: 1rem; color: var(--text-primary); font-family: var(--font-heading);">Download Rapidi</h4>
-                <div id="modal-catalog-list" class="catalog-list">
-                    <!-- Dynamic catalogs will be injected here -->
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Cookie Banner -->
     <div id="cookie-banner" class="cookie-banner">
         <div class="cookie-content">
