@@ -19,16 +19,37 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Sticky Navbar & Scroll Effects
+    // Sticky Navbar & ScrollSpy Effects
     const navbar = document.getElementById('navbar');
+    const sections = document.querySelectorAll('section[id]');
     
     if (navbar) {
         window.addEventListener('scroll', () => {
+            // Sticky Navbar
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
+            
+            // ScrollSpy Logic
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(a => {
+                // Ignore the btn-primary styling
+                if(!a.classList.contains('btn-primary')) {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href') === `#${current}`) {
+                        a.classList.add('active');
+                    }
+                }
+            });
         });
     }
 
